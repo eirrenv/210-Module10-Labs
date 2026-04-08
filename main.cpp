@@ -6,6 +6,7 @@
 #include <fstream>
 #include <algorithm> // vector sort :)
 #include <iomanip>
+#include <numeric> // accumulate
 using namespace std;
 using namespace std::chrono;
 
@@ -21,6 +22,7 @@ int main() {
          << setw(setWidth) << right << "List"
          << setw(setWidth) << right << "Set"
          << endl;
+
     string op;
     string codeToInsert;
     vector<string> data;
@@ -31,93 +33,96 @@ int main() {
     while (fin >> codeToInsert) {
         data.push_back(codeToInsert);
     }
-    // vector reading time
-    auto start = high_resolution_clock::now();
-    for (const auto &x : data) codeVector.push_back(x);
-    auto end = high_resolution_clock::now();
-    auto vectorSpeed = duration_cast<nanoseconds>(end - start);
 
-    // list reading time
-    start = high_resolution_clock::now();
-    for (const auto &x : data) codeList.push_back(x);
-    end = high_resolution_clock::now();
-    auto listSpeed = duration_cast<nanoseconds>(end - start);
+    for (int i = 0; i < RUNS; ++i) { // run loop
+        // vector reading time
+        auto start = high_resolution_clock::now();
+        for (const auto &x : data) codeVector.push_back(x);
+        auto end = high_resolution_clock::now();
+        auto vectorSpeed = duration_cast<nanoseconds>(end - start);
 
-    // set reading time
-    start = high_resolution_clock::now();
-    for (const auto &x : data) codeSet.insert(x);
-    end = high_resolution_clock::now();
-    auto setSpeed = duration_cast<nanoseconds>(end - start);
+        // list reading time
+        start = high_resolution_clock::now();
+        for (const auto &x : data) codeList.push_back(x);
+        end = high_resolution_clock::now();
+        auto listSpeed = duration_cast<nanoseconds>(end - start);
 
-    // reading time print
-    op = "\tRead";
-    printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
+        // set reading time
+        start = high_resolution_clock::now();
+        for (const auto &x : data) codeSet.insert(x);
+        end = high_resolution_clock::now();
+        auto setSpeed = duration_cast<nanoseconds>(end - start);
 
-    // vector sorting time
-    start = high_resolution_clock::now();
-    sort(codeVector.begin(), codeVector.end());
-    end = high_resolution_clock::now();
-    vectorSpeed = duration_cast<nanoseconds>(end - start);
+        // reading time print
+        op = "\tRead";
+        printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
 
-    // list sorting time
-    start = high_resolution_clock::now();
-    codeList.sort();
-    end = high_resolution_clock::now();
-    listSpeed = duration_cast<nanoseconds>(end - start);
+        // vector sorting time
+        start = high_resolution_clock::now();
+        sort(codeVector.begin(), codeVector.end());
+        end = high_resolution_clock::now();
+        vectorSpeed = duration_cast<nanoseconds>(end - start);
 
-    // test sort prints, set already sorted
-    op = "\tSort";
-    printLine(op, vectorSpeed.count(), listSpeed.count(), -1);
+        // list sorting time
+        start = high_resolution_clock::now();
+        codeList.sort();
+        end = high_resolution_clock::now();
+        listSpeed = duration_cast<nanoseconds>(end - start);
 
-    codeToInsert = "TESTCODE";
+        // test sort prints, set already sorted
+        op = "\tSort";
+        printLine(op, vectorSpeed.count(), listSpeed.count(), -1);
 
-    // vector inserting time
-    start = high_resolution_clock::now();
-    codeVector.insert(codeVector.begin() + data.size() / 2, codeToInsert);
-    end = high_resolution_clock::now();
-    vectorSpeed = duration_cast<nanoseconds>(end - start);
+        codeToInsert = "TESTCODE";
 
-    // list inserting time
-    start = high_resolution_clock::now();
-    auto it = codeList.begin();
-    advance(it, codeList.size() / 2);
-    codeList.insert(it, codeToInsert);
-    end = high_resolution_clock::now();
-    listSpeed = duration_cast<nanoseconds>(end - start);
+        // vector inserting time
+        start = high_resolution_clock::now();
+        codeVector.insert(codeVector.begin() + data.size() / 2, codeToInsert);
+        end = high_resolution_clock::now();
+        vectorSpeed = duration_cast<nanoseconds>(end - start);
 
-    // set inserting time
-    start = high_resolution_clock::now();
-    codeSet.insert(codeToInsert);
-    end = high_resolution_clock::now();
-    setSpeed = duration_cast<nanoseconds>(end - start);
+        // list inserting time
+        start = high_resolution_clock::now();
+        auto it = codeList.begin();
+        advance(it, codeList.size() / 2);
+        codeList.insert(it, codeToInsert);
+        end = high_resolution_clock::now();
+        listSpeed = duration_cast<nanoseconds>(end - start);
 
-    // test insert prints
-    op = "\tInsert";
-    printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
+        // set inserting time
+        start = high_resolution_clock::now();
+        codeSet.insert(codeToInsert);
+        end = high_resolution_clock::now();
+        setSpeed = duration_cast<nanoseconds>(end - start);
 
-    // vector deletion time
-    start = high_resolution_clock::now();
-    codeVector.erase(codeVector.begin() + codeVector.size() / 2);
-    end = high_resolution_clock::now();
-    vectorSpeed = duration_cast<nanoseconds>(end - start);
-    
-    // list deletion time
-    start = high_resolution_clock::now();
-    it = codeList.begin();
-    advance(it, codeList.size() / 2);
-    codeList.erase(it);
-    end = high_resolution_clock::now();
-    listSpeed = duration_cast<nanoseconds>(end - start);
+        // test insert prints
+        op = "\tInsert";
+        printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
 
-    // set deletion time
-    start = high_resolution_clock::now();
-    codeSet.erase(codeToInsert);
-    end = high_resolution_clock::now();
-    setSpeed = duration_cast<nanoseconds>(end - start);
+        // vector deletion time
+        start = high_resolution_clock::now();
+        codeVector.erase(codeVector.begin() + codeVector.size() / 2);
+        end = high_resolution_clock::now();
+        vectorSpeed = duration_cast<nanoseconds>(end - start);
+        
+        // list deletion time
+        start = high_resolution_clock::now();
+        it = codeList.begin();
+        advance(it, codeList.size() / 2);
+        codeList.erase(it);
+        end = high_resolution_clock::now();
+        listSpeed = duration_cast<nanoseconds>(end - start);
 
-    // test deletion prints
-    op = "\tDelete";
-    printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
+        // set deletion time
+        start = high_resolution_clock::now();
+        codeSet.erase(codeToInsert);
+        end = high_resolution_clock::now();
+        setSpeed = duration_cast<nanoseconds>(end - start);
+
+        // test deletion prints
+        op = "\tDelete";
+        printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
+    }
 
     return 0;
 }
