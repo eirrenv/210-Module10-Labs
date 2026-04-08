@@ -16,7 +16,12 @@ void printLine(string operation, long long vectorVal, long long listVal, long lo
 const int RUNS = 15; // how many runs
 const int setWidth = 15; // width of print
 
+const int OP = 4; // operations done in program
+const int VLS = 3; // types of containers used in program
+
 int main() {
+
+    long long results[RUNS + 1][OP][VLS] = {0}; // accumulator container
 
     string op;
     string codeToInsert;
@@ -59,6 +64,11 @@ int main() {
         end = high_resolution_clock::now();
         auto setSpeed = duration_cast<nanoseconds>(end - start);
 
+        // add results to 3D array
+        results[i][0][0] = vectorSpeed.count();
+        results[i][0][1] = listSpeed.count();
+        results[i][0][2] = setSpeed.count();
+
         // reading time print
         op = "\tRead";
         printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
@@ -74,6 +84,10 @@ int main() {
         codeList.sort();
         end = high_resolution_clock::now();
         listSpeed = duration_cast<nanoseconds>(end - start);
+
+        results[i][1][0] = vectorSpeed.count();
+        results[i][1][1] = listSpeed.count();
+        results[i][1][2] = -1;
 
         // test sort prints, set already sorted
         op = "\tSort";
@@ -101,6 +115,10 @@ int main() {
         end = high_resolution_clock::now();
         setSpeed = duration_cast<nanoseconds>(end - start);
 
+        results[i][2][0] = vectorSpeed.count();
+        results[i][2][1] = listSpeed.count();
+        results[i][2][2] = setSpeed.count();
+
         // test insert prints
         op = "\tInsert";
         printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
@@ -124,6 +142,10 @@ int main() {
         codeSet.erase(codeToInsert);
         end = high_resolution_clock::now();
         setSpeed = duration_cast<nanoseconds>(end - start);
+
+        results[i][3][0] = vectorSpeed.count();
+        results[i][3][1] = listSpeed.count();
+        results[i][3][2] = setSpeed.count();
 
         // test deletion prints
         op = "\tDelete";
