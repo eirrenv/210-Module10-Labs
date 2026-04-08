@@ -19,11 +19,6 @@ int main() {
 
     menu(villager);
 
-    // commenting out demo code to work on declarations
-    // commenting so I can say Milestone 2
-
-    
-
     // clear villager for posterity
     villager.clear();
 
@@ -40,8 +35,8 @@ void menu(map<string, tuple<int, string, string>> v) {
          << "3. Search For Villager" << endl
          << "4. Exit" << endl;
     cin >> choice;
-    while (choice != 4) {
-        while (choice < 1 || choice > 4) {
+    while (choice != 6) {
+        while (choice < 1 || choice > 6) {
             cout << "Please input a choice between 1 to 4:" << endl;
             cout << "1. Increase Friendship" << endl
             << "2. Decrease Friendship" << endl
@@ -51,20 +46,43 @@ void menu(map<string, tuple<int, string, string>> v) {
             cout << endl;
         }
         if (choice == 1) {
+            // add a villager
+            string name;
+            int level;
+            string species;
+            string phrase;
+            cout << "Villager name: ";
+            cin.ignore();
+            getline(cin, name);
+            cout << "Friendship level: ";
+            cin >> level;
+            cin.ignore();
+            cout << "Species: "; 
+            getline(cin, species);
+            cout << "Catchphrase: ";
+            getline(cin, phrase);
+            v.insert({name, {level, species, phrase}});
+        }
+        else if (choice == 2) {
+            // delete a villager
+        }
+        else if (choice == 3) {
+            // adds friendship to all villagers by 1
             for (auto &pair : v) {
             if (get<0>(pair.second) != 10) {
                     get<0>(pair.second) += 1;
             }
             }
         }
-        else if (choice == 2) {
+        else if (choice == 4) {
+            // removes friendship from all villagers by 1
             for (auto &pair : v) {
             if (get<0>(pair.second) != 0) {
                     get<0>(pair.second) -= 1;
             }
             }
         }
-        else if (choice == 3) {
+        else if (choice == 5) {
             // search for an element using .find() to avoid errors
             string searchKey = "";
             cin.ignore();
