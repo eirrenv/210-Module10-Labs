@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <string> // for getline
 using namespace std;
 
 void menu(map<string, tuple<int, string, string>> v); // prototype for menu function, moving villager printing into function
@@ -21,21 +22,7 @@ int main() {
     // commenting out demo code to work on declarations
     // commenting so I can say Milestone 2
 
-    /* placing back search function 
-
-    // search for an element using .find() to avoid errors
-    string searchKey = "Audie";
-    auto it = villagerColors.find(searchKey);
-    if (it != villagerColors.end()) {  // the iterator points to beyond the end of the map
-                                       // if searchKey is not found
-        cout << "\nFound " << searchKey << "'s favorite colors: ";
-        for (auto color : it->second)  // range loop to traverse the value/vector
-            cout << color << " ";
-        cout << endl;
-    } else
-        cout << endl << searchKey << " not found." << endl;
-        
-    */
+    
 
     // clear villager for posterity
     villager.clear();
@@ -77,6 +64,21 @@ void menu(map<string, tuple<int, string, string>> v) {
             }
             }
         }
+        else if (choice == 3) {
+            // search for an element using .find() to avoid errors
+            string searchKey = "";
+            cin.ignore();
+            cout << "Please enter the villager you would like to search for: ";
+            getline(cin, searchKey);
+            for (auto pair : v) {
+                if (pair.first == searchKey) {
+                    cout << searchKey << " is a villager!" << endl;
+                }
+                else {
+                cout << endl << searchKey << " is not a villager." << endl;
+                }
+            }
+        }
         // moving villager printing into menu
         cout << "Villager details:" << endl;
         for (auto pair : v) {
@@ -85,7 +87,9 @@ void menu(map<string, tuple<int, string, string>> v) {
             cout << " [" << villagerLevel << ", " << villagerSpecies << ", " << villagerPhrase << "]";
             cout << endl;
         }
+        cout << "Please choose another option: ";
         cin >> choice;
+        cout << endl;
     }
 
 
