@@ -5,23 +5,28 @@ using namespace std;
 
 int main() {
     // declarations
-    map<string, vector<string>> villagerColors;
+    map<string, tuple<int, string, string>> villager;
 
     // insert elements into the map
     // note how the right-hand side of the assignment are the vector elements
-    villagerColors["Audie"] = {"Orange", "Yellow", "Red"};
-    villagerColors["Raymond"] = {"Black", "Gray", "White"};
-    villagerColors.insert({"Marshal", {"Blue", "White", "Black"}});
+    villager["Audie"] = {8, "Duck", "Quack!"};
+    villager["Raymond"] = {4, "Dog", "Woof."};
+    villager.insert({"Marshal", {3, "Tiger", "Rawr!"}});
+
+    // commenting out demo code to work on declarations
+    
 
     // access the map using a range-based for loop
-    cout << "Villagers and their favorite colors (range-based for loop):" << endl;
-    for (auto pair : villagerColors) {
+    cout << "Villagers and their friendship level, species, and catchphrase (range-based for loop):" << endl;
+    for (auto pair : villager) {
         cout << pair.first << ": ";
-        for (auto color : pair.second)
-            cout << color << " ";
+        auto [villagerLevel, villagerSpecies, villagerPhrase] = pair.second;
+        cout << "Friendship level: " << villagerLevel << " "
+             << "Species: " << villagerSpecies << " " 
+             << "Phrase: " << villagerPhrase;
         cout << endl;
     }
-
+    /*
     // access the map using iterators
     cout << "\nVillagers and their favorite colors (iterators):" << endl;
     for (map<string, vector<string>>::iterator it = villagerColors.begin(); 
@@ -48,10 +53,14 @@ int main() {
     } else
         cout << endl << searchKey << " not found." << endl;
 
+    */
+
     // report size, clear, report size again to confirm map operations
-    cout << "\nSize before clear: " << villagerColors.size() << endl;
-    villagerColors.clear();
-    cout << "Size after clear: " << villagerColors.size() << endl;
+    cout << "\nSize before clear: " << villager.size() << endl;
+    villager.clear();
+    cout << "Size after clear: " << villager.size() << endl;
+
+    
 
     return 0;
 }
