@@ -22,6 +22,11 @@ const int VLS = 3; // types of containers used in program
 int main() {
 
     long long results[RUNS][OP][VLS] = {0}; // accumulator container
+    
+    // going to be used to hold speed totals 
+    long long vectorTotal = 0;
+    long long listTotal = 0;
+    long long setTotal = 0;
 
     string op;
     string codeToInsert;
@@ -35,10 +40,8 @@ int main() {
         data.push_back(codeToInsert);
     }
 
-
     for (int i = 0; i < RUNS; ++i) { // run loop
         
-
         // vector reading time
         auto start = high_resolution_clock::now();
         for (const auto &x : data) codeVector.push_back(x);
@@ -128,6 +131,10 @@ int main() {
         results[i][3][1] = listSpeed.count();
         results[i][3][2] = setSpeed.count();
 
+        
+        // temp removing print statements to use averages
+
+        /*
         // print loop results in table
         cout << "Number of simulations: " << i + 1 << endl;
 
@@ -147,6 +154,8 @@ int main() {
         printLine(op, results[i][2][0], results[i][2][1], results[i][2][2]);
         op = "\tDelete";
         printLine(op, results[i][3][0], results[i][3][1], results[i][3][2]);
+
+        */
 
         // cleaning out for next loop
         codeVector.clear();
