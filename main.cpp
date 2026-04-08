@@ -73,6 +73,10 @@ int main() {
         readTotal[1] += Read[i][1];
         readTotal[2] += Read[i][2];
 
+        cout << "readTotal[0]: " << readTotal[0] << endl;
+        // testing Read average
+        /*
+
         // vector sorting time
         start = high_resolution_clock::now();
         sort(codeVector.begin(), codeVector.end());
@@ -151,6 +155,7 @@ int main() {
         deleteTotal[1] += Delete[i][1];
         deleteTotal[2] += Delete[i][2];
 
+        */
         // temp removing print statements to use averages
 
         /*
@@ -181,6 +186,14 @@ int main() {
         codeList.clear();
         codeSet.clear();
     }
+
+    readTotal[0] = readTotal[0] / 15;
+    readTotal[1] = readTotal[1] / 15;
+    readTotal[2] = readTotal[2] / 15;
+
+    cout << "Testing print for Read: " << endl;
+
+    printLine("Read", readTotal[0], readTotal[1], readTotal[2]);
 
     return 0;
 }
