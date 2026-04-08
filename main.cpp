@@ -73,10 +73,6 @@ int main() {
         readTotal[1] += Read[i][1];
         readTotal[2] += Read[i][2];
 
-        cout << "readTotal[0]: " << readTotal[0] << endl;
-        // testing Read average
-        /*
-
         // vector sorting time
         start = high_resolution_clock::now();
         sort(codeVector.begin(), codeVector.end());
@@ -155,12 +151,31 @@ int main() {
         deleteTotal[1] += Delete[i][1];
         deleteTotal[2] += Delete[i][2];
 
-        */
-        // temp removing print statements to use averages
+        
+        // cleaning out for next loop
+        codeVector.clear();
+        codeList.clear();
+        codeSet.clear();
+    }
 
-        /*
-        // print loop results in table
-        cout << "Number of simulations: " << i + 1 << endl;
+    // tallying totals and averaging values
+    readTotal[0] = readTotal[0] / 15;
+    readTotal[1] = readTotal[1] / 15;
+    readTotal[2] = readTotal[2] / 15;
+
+    sortTotal[0] = sortTotal[0] / 15;
+    sortTotal[1] = sortTotal[1] / 15;
+    sortTotal[2] = sortTotal[2] / 15;
+
+    insertTotal[0] = insertTotal[0] / 15;
+    insertTotal[1] = insertTotal[1] / 15;
+    insertTotal[2] = insertTotal[2] / 15;
+
+    deleteTotal[0] = deleteTotal[0] / 15;
+    deleteTotal[1] = deleteTotal[1] / 15;
+    deleteTotal[2] = deleteTotal[2] / 15;
+
+    cout << "Number of simulations: " << RUNS << endl;
 
         // print values in clean list
         cout << setw(12) << right << "Operation" 
@@ -168,32 +183,17 @@ int main() {
          << setw(setWidth) << right << "List"
          << setw(setWidth) << right << "Set"
          << endl;
-    
-        // printing values using 3D array
+
+    // printing values using 3D array
         op = "\tRead";
-        printLine(op, results[i][0][0], results[i][0][1], results[i][0][2]);
+        printLine(op, readTotal[0], readTotal[1], readTotal[2]);
         op = "\tSort";
-        printLine(op, results[i][1][0], results[i][1][1], results[i][1][2]);
+        printLine(op, sortTotal[0], sortTotal[1], sortTotal[2]);
         op = "\tInsert";
-        printLine(op, results[i][2][0], results[i][2][1], results[i][2][2]);
+        printLine(op, insertTotal[0], insertTotal[1], insertTotal[2]);
         op = "\tDelete";
-        printLine(op, results[i][3][0], results[i][3][1], results[i][3][2]);
+        printLine(op, deleteTotal[0], deleteTotal[1],deleteTotal[2]);
 
-        */
-
-        // cleaning out for next loop
-        codeVector.clear();
-        codeList.clear();
-        codeSet.clear();
-    }
-
-    readTotal[0] = readTotal[0] / 15;
-    readTotal[1] = readTotal[1] / 15;
-    readTotal[2] = readTotal[2] / 15;
-
-    cout << "Testing print for Read: " << endl;
-
-    printLine("Read", readTotal[0], readTotal[1], readTotal[2]);
 
     return 0;
 }
