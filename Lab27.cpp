@@ -30,9 +30,11 @@ void menu(map<string, tuple<int, string, string>> v) {
     // int to contain user menu choice
     int choice = -1;
 
-    cout << "1. Increase Friendship" << endl
-         << "2. Decrease Friendship" << endl
-         << "3. Search For Villager" << endl
+    cout << "1. Add Villager" << endl
+         << "2. Delete Villager" << endl    
+         << "3. Increase Friendship" << endl
+         << "4. Decrease Friendship" << endl
+         << "5. Search For Villager" << endl
          << "4. Exit" << endl;
     cin >> choice;
     while (choice != 6) {
@@ -65,6 +67,19 @@ void menu(map<string, tuple<int, string, string>> v) {
         }
         else if (choice == 2) {
             // delete a villager
+            string delV;
+            cout << "Please enter a villager to delete: ";
+            cin.ignore();
+            getline(cin, delV);
+            auto it = v.find(delV);
+            if (it != v.end()) {
+                v.erase(it);
+                cout << delV << " has been deleted." << endl;
+            }
+            else {
+                cout << endl << delV << " is not a villager." << endl;
+            }
+
         }
         else if (choice == 3) {
             // adds friendship to all villagers by 1
