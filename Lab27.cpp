@@ -70,13 +70,12 @@ void menu(map<string, tuple<int, string, string>> v) {
             cin.ignore();
             cout << "Please enter the villager you would like to search for: ";
             getline(cin, searchKey);
-            for (auto pair : v) {
-                if (pair.first == searchKey) {
-                    cout << searchKey << " is a villager!" << endl;
-                }
-                else {
+            auto it = v.find(searchKey);
+            if (it != v.end()) {
+                cout << searchKey << " is a villager!" << endl;
+            }
+            else {
                 cout << endl << searchKey << " is not a villager." << endl;
-                }
             }
         }
         // moving villager printing into menu
@@ -91,7 +90,5 @@ void menu(map<string, tuple<int, string, string>> v) {
         cin >> choice;
         cout << endl;
     }
-
-
-    
+    cout << "Exiting program." << endl;
 }
