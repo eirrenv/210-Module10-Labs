@@ -1,0 +1,134 @@
+#include <iostream>
+#include <chrono>
+#include <vector>
+#include <list>
+#include <set>
+#include <fstream>
+#include <algorithm> // vector sort :)
+#include <iomanip>
+using namespace std;
+using namespace std::chrono;
+
+// scalable
+void printLine(string operation, long long vectorVal, long long listVal, long long setVal);
+
+int main() {
+    cout << setw(12) << right << "Operation" 
+         << setw(15) << right << "Vector"
+         << setw(15) << right << "List"
+         << setw(15) << right << "Set"
+         << endl;
+    string op;
+    string codeToInsert;
+    vector<string> data;
+    vector<string> codeVector;
+    list<string> codeList;
+    set<string> codeSet;
+    ifstream fin("codes.txt");
+    while (fin >> codeToInsert) {
+        data.push_back(codeToInsert);
+    }
+    // vector reading time
+    auto start = high_resolution_clock::now();
+    for (const auto &x : data) codeVector.push_back(x);
+    auto end = high_resolution_clock::now();
+    auto vectorSpeed = duration_cast<nanoseconds>(end - start);
+
+    // list reading time
+    start = high_resolution_clock::now();
+    for (const auto &x : data) codeList.push_back(x);
+    end = high_resolution_clock::now();
+    auto listSpeed = duration_cast<nanoseconds>(end - start);
+
+    // set reading time
+    start = high_resolution_clock::now();
+    for (const auto &x : data) codeSet.insert(x);
+    end = high_resolution_clock::now();
+    auto setSpeed = duration_cast<nanoseconds>(end - start);
+
+    // reading time print
+    op = "\tRead";
+    printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
+
+    // vector sorting time
+    start = high_resolution_clock::now();
+    sort(codeVector.begin(), codeVector.end());
+    end = high_resolution_clock::now();
+    vectorSpeed = duration_cast<nanoseconds>(end - start);
+
+    // list sorting time
+    start = high_resolution_clock::now();
+    codeList.sort();
+    end = high_resolution_clock::now();
+    listSpeed = duration_cast<nanoseconds>(end - start);
+
+    // test sort prints, set already sorted
+    op = "\tSort";
+    printLine(op, vectorSpeed.count(), listSpeed.count(), -1);
+
+    codeToInsert = "TESTCODE";
+
+    // vector inserting time
+    start = high_resolution_clock::now();
+    codeVector.insert(codeVector.begin() + data.size() / 2, codeToInsert);
+    end = high_resolution_clock::now();
+    vectorSpeed = duration_cast<nanoseconds>(end - start);
+
+    // list inserting time
+    start = high_resolution_clock::now();
+    auto it = codeList.begin();
+    advance(it, codeList.size() / 2);
+    codeList.insert(it, codeToInsert);
+    end = high_resolution_clock::now();
+    listSpeed = duration_cast<nanoseconds>(end - start);
+
+    // set inserting time
+    start = high_resolution_clock::now();
+    codeSet.insert(codeToInsert);
+    end = high_resolution_clock::now();
+    setSpeed = duration_cast<nanoseconds>(end - start);
+
+    // test insert prints
+    op = "\tInsert";
+    printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
+
+    // vector deletion time
+    start = high_resolution_clock::now();
+    codeVector.erase(codeVector.begin() + codeVector.size() / 2);
+    end = high_resolution_clock::now();
+    vectorSpeed = duration_cast<nanoseconds>(end - start);
+    
+    // list deletion time
+    start = high_resolution_clock::now();
+    it = codeList.begin();
+    advance(it, codeList.size() / 2);
+    codeList.erase(it);
+    end = high_resolution_clock::now();
+    listSpeed = duration_cast<nanoseconds>(end - start);
+
+    // set deletion time
+    start = high_resolution_clock::now();
+    codeSet.erase(codeToInsert);
+    end = high_resolution_clock::now();
+    setSpeed = duration_cast<nanoseconds>(end - start);
+
+    // test deletion prints
+    op = "\tDelete";
+    printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
+
+    return 0;
+}
+
+void printLine(string operation, long long vectorVal, long long listVal, long long setVal) {
+    cout << setw(12) << right << operation 
+         << setw(15) << right << vectorVal 
+         << setw(15) << right << listVal 
+         << setw(15) << right << setVal 
+         << endl;
+}
+/* syntax examples:
+auto start = high_resolution_clock::now()
+auto end = high_resolution_clock::now()
+auto duration = duration_cast<nanoseconds>(end - start)
+duration.count() references elapsed nanoseconds
+*/
