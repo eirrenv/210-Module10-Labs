@@ -6,7 +6,6 @@
 #include <fstream>
 #include <algorithm> // vector sort :)
 #include <iomanip>
-#include <numeric> // accumulate
 using namespace std;
 using namespace std::chrono;
 
@@ -17,16 +16,23 @@ const int RUNS = 15; // how many runs
 const int setWidth = 15; // width of print
 
 const int OP = 4; // operations done in program
-const int VLS = 3; // types of containers used in program
+const int TOTAL = 1; // accumulator for operation
 
 int main() {
 
-    long long results[RUNS][OP][VLS] = {0}; // accumulator container
-    
-    // going to be used to hold speed totals 
-    long long vectorTotal = 0;
-    long long listTotal = 0;
-    long long setTotal = 0;
+    // accumulator containers
+    long long vectorRead[RUNS][OP][TOTAL] = {0}; 
+    long long listRead[OP][RUNS][TOTAL] = {0}; 
+    long long setRead[OP][RUNS][TOTAL] = {0}; 
+    long long vectorSort[OP][RUNS][TOTAL] = {0}; 
+    long long listSort[OP][RUNS][TOTAL] = {0}; 
+    long long setSort[OP][RUNS][TOTAL] = {0}; 
+    long long vectorInsert[OP][RUNS][TOTAL] = {0}; 
+    long long listInsert[OP][RUNS][TOTAL] = {0}; 
+    long long setInsert[OP][RUNS][TOTAL] = {0};
+    long long vectorDelete[OP][RUNS][TOTAL] = {0}; 
+    long long listDelete[OP][VLS][TOTAL] = {0}; 
+    long long setDelete[OP][VLS][TOTAL] = {0};
 
     string op;
     string codeToInsert;
@@ -61,9 +67,13 @@ int main() {
         auto setSpeed = duration_cast<nanoseconds>(end - start);
 
         // add results to 3D array
-        results[i][0][0] = vectorSpeed.count();
-        results[i][0][1] = listSpeed.count();
-        results[i][0][2] = setSpeed.count();
+        vectorRead[0][0][0] = vectorSpeed.count();
+        listRead[0][0][1] = listSpeed.count();
+        setRead[i][0][2] = setSpeed.count();
+
+        // commenting out to work on 3D array
+
+        /*
 
         // vector sorting time
         start = high_resolution_clock::now();
@@ -130,6 +140,8 @@ int main() {
         results[i][3][0] = vectorSpeed.count();
         results[i][3][1] = listSpeed.count();
         results[i][3][2] = setSpeed.count();
+
+        */
 
         
         // temp removing print statements to use averages
