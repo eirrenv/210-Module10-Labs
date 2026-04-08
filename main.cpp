@@ -15,24 +15,21 @@ void printLine(string operation, long long vectorVal, long long listVal, long lo
 const int RUNS = 15; // how many runs
 const int setWidth = 15; // width of print
 
-const int OP = 4; // operations done in program
-const int TOTAL = 1; // accumulator for operation
+const int VLS = 3; // operations done in program
 
 int main() {
 
     // accumulator containers
-    long long vectorRead[RUNS][OP][TOTAL] = {0}; 
-    long long listRead[OP][RUNS][TOTAL] = {0}; 
-    long long setRead[OP][RUNS][TOTAL] = {0}; 
-    long long vectorSort[OP][RUNS][TOTAL] = {0}; 
-    long long listSort[OP][RUNS][TOTAL] = {0}; 
-    long long setSort[OP][RUNS][TOTAL] = {0}; 
-    long long vectorInsert[OP][RUNS][TOTAL] = {0}; 
-    long long listInsert[OP][RUNS][TOTAL] = {0}; 
-    long long setInsert[OP][RUNS][TOTAL] = {0};
-    long long vectorDelete[OP][RUNS][TOTAL] = {0}; 
-    long long listDelete[OP][VLS][TOTAL] = {0}; 
-    long long setDelete[OP][VLS][TOTAL] = {0};
+    long long Read[RUNS][VLS] = {0}; 
+    long long Sort[RUNS][VLS] = {0}; 
+    long long Insert[RUNS][VLS] = {0}; 
+    long long Delete[RUNS][VLS] = {0}; 
+
+    // accumulators for totals
+    long long readTotal[VLS] = {0};
+    long long sortTotal[VLS] = {0};
+    long long insertTotal[VLS] = {0};
+    long long deleteTotal[VLS] = {0};
 
     string op;
     string codeToInsert;
@@ -66,14 +63,15 @@ int main() {
         end = high_resolution_clock::now();
         auto setSpeed = duration_cast<nanoseconds>(end - start);
 
-        // add results to 3D array
-        vectorRead[0][0][0] = vectorSpeed.count();
-        listRead[0][0][1] = listSpeed.count();
-        setRead[i][0][2] = setSpeed.count();
+        // add results to 2D array
+        Read[i][0] = vectorSpeed.count();
+        Read[i][1] = listSpeed.count();
+        Read[i][2] = setSpeed.count();
 
-        // commenting out to work on 3D array
-
-        /*
+        // add results to 3D array total
+        readTotal[0] += Read[i][0];
+        readTotal[1] += Read[i][1];
+        readTotal[2] += Read[i][2];
 
         // vector sorting time
         start = high_resolution_clock::now();
@@ -87,9 +85,13 @@ int main() {
         end = high_resolution_clock::now();
         listSpeed = duration_cast<nanoseconds>(end - start);
 
-        results[i][1][0] = vectorSpeed.count();
-        results[i][1][1] = listSpeed.count();
-        results[i][1][2] = -1;
+        Sort[i][0] = vectorSpeed.count();
+        Sort[i][1] = listSpeed.count();
+        Sort[i][2] = -1;
+
+        sortTotal[0] += Sort[i][0];
+        sortTotal[1] += Sort[i][1];
+        sortTotal[2] += Sort[i][2];
 
         codeToInsert = "TESTCODE";
 
@@ -113,9 +115,13 @@ int main() {
         end = high_resolution_clock::now();
         setSpeed = duration_cast<nanoseconds>(end - start);
 
-        results[i][2][0] = vectorSpeed.count();
-        results[i][2][1] = listSpeed.count();
-        results[i][2][2] = setSpeed.count();
+        Insert[i][0] = vectorSpeed.count();
+        Insert[i][1] = listSpeed.count();
+        Insert[i][2] = setSpeed.count();
+
+        insertTotal[0] += Insert[i][0];
+        insertTotal[1] += Insert[i][1];
+        insertTotal[2] += Insert[i][2];
 
         // vector deletion time
         start = high_resolution_clock::now();
@@ -137,13 +143,14 @@ int main() {
         end = high_resolution_clock::now();
         setSpeed = duration_cast<nanoseconds>(end - start);
 
-        results[i][3][0] = vectorSpeed.count();
-        results[i][3][1] = listSpeed.count();
-        results[i][3][2] = setSpeed.count();
+        Delete[i][0] = vectorSpeed.count();
+        Delete[i][1] = listSpeed.count();
+        Delete[i][2] = setSpeed.count();
 
-        */
+        deleteTotal[0] += Delete[i][0];
+        deleteTotal[1] += Delete[i][1];
+        deleteTotal[2] += Delete[i][2];
 
-        
         // temp removing print statements to use averages
 
         /*
