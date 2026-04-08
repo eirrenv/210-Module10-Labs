@@ -3,43 +3,25 @@
 #include <vector>
 using namespace std;
 
+void menu(map<string, tuple<int, string, string>> v); // prototype for menu function, moving villager printing into function
+
 int main() {
     // declarations
     map<string, tuple<int, string, string>> villager;
 
+    
     // insert elements into the map
     // note how the right-hand side of the assignment are the vector elements
     villager["Audie"] = {8, "Duck", "Quack!"};
     villager["Raymond"] = {4, "Dog", "Woof."};
     villager.insert({"Marshal", {3, "Tiger", "Rawr!"}});
 
+    menu(villager);
+
     // commenting out demo code to work on declarations
     // commenting so I can say Milestone 2
 
-    // access the map using a range-based for loop
-    cout << "Villagers and their friendship level, species, and catchphrase (range-based for loop):" << endl;
-    for (auto pair : villager) {
-        cout << pair.first << ": ";
-        auto [villagerLevel, villagerSpecies, villagerPhrase] = pair.second;
-        cout << "Friendship level: " << villagerLevel << " "
-             << "Species: " << villagerSpecies << " " 
-             << "Phrase: " << villagerPhrase;
-        cout << endl;
-    }
-    /*
-    // access the map using iterators
-    cout << "\nVillagers and their favorite colors (iterators):" << endl;
-    for (map<string, vector<string>>::iterator it = villagerColors.begin(); 
-                                               it != villagerColors.end(); ++it) {
-        cout << it->first << ": ";
-        for (auto color : it->second) {
-            cout << color << " ";
-        }
-        cout << endl;
-    }
-
-    // delete an element
-    villagerColors.erase("Raymond");
+    /* placing back search function 
 
     // search for an element using .find() to avoid errors
     string searchKey = "Audie";
@@ -52,15 +34,27 @@ int main() {
         cout << endl;
     } else
         cout << endl << searchKey << " not found." << endl;
-
+        
     */
 
-    // report size, clear, report size again to confirm map operations
-    cout << "\nSize before clear: " << villager.size() << endl;
+    // clear villager for posterity
     villager.clear();
-    cout << "Size after clear: " << villager.size() << endl;
-
-    
 
     return 0;
+}
+
+// menu function for scalable menu
+void menu(map<string, tuple<int, string, string>> v) {
+    cout << "1. Increase Friendship" << endl
+         << "2. Decrease Friendship" << endl
+         << "3. Search For Villager" << endl
+         << "4. Exit" << endl;
+
+    // moving villager printing into menu
+    for (auto pair : v) {
+        cout << pair.first;
+        auto [villagerLevel, villagerSpecies, villagerPhrase] = pair.second;
+        cout << " [" << villagerLevel << ", " << villagerSpecies << ", " << villagerPhrase << "]";
+        cout << endl;
+    }
 }
