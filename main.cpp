@@ -12,11 +12,14 @@ using namespace std::chrono;
 // scalable
 void printLine(string operation, long long vectorVal, long long listVal, long long setVal);
 
+const int RUNS = 15; // how many runs
+const int setWidth = 15; // width of print
+
 int main() {
     cout << setw(12) << right << "Operation" 
-         << setw(15) << right << "Vector"
-         << setw(15) << right << "List"
-         << setw(15) << right << "Set"
+         << setw(setWidth) << right << "Vector"
+         << setw(setWidth) << right << "List"
+         << setw(setWidth) << right << "Set"
          << endl;
     string op;
     string codeToInsert;
@@ -121,9 +124,9 @@ int main() {
 
 void printLine(string operation, long long vectorVal, long long listVal, long long setVal) {
     cout << setw(12) << right << operation 
-         << setw(15) << right << vectorVal 
-         << setw(15) << right << listVal 
-         << setw(15) << right << setVal 
+         << setw(setWidth) << right << vectorVal 
+         << setw(setWidth) << right << listVal 
+         << setw(setWidth) << right << setVal 
          << endl;
 }
 /* syntax examples:
