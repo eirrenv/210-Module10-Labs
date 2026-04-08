@@ -17,11 +17,6 @@ const int RUNS = 15; // how many runs
 const int setWidth = 15; // width of print
 
 int main() {
-    cout << setw(12) << right << "Operation" 
-         << setw(setWidth) << right << "Vector"
-         << setw(setWidth) << right << "List"
-         << setw(setWidth) << right << "Set"
-         << endl;
 
     string op;
     string codeToInsert;
@@ -29,12 +24,23 @@ int main() {
     vector<string> codeVector;
     list<string> codeList;
     set<string> codeSet;
+
     ifstream fin("codes.txt");
     while (fin >> codeToInsert) {
         data.push_back(codeToInsert);
     }
 
+
     for (int i = 0; i < RUNS; ++i) { // run loop
+        cout << "Number of simulations: " << i + 1 << endl;
+
+        // print values in clean list
+        cout << setw(12) << right << "Operation" 
+         << setw(setWidth) << right << "Vector"
+         << setw(setWidth) << right << "List"
+         << setw(setWidth) << right << "Set"
+         << endl;
+
         // vector reading time
         auto start = high_resolution_clock::now();
         for (const auto &x : data) codeVector.push_back(x);
@@ -122,6 +128,11 @@ int main() {
         // test deletion prints
         op = "\tDelete";
         printLine(op, vectorSpeed.count(), listSpeed.count(), setSpeed.count());
+
+        // cleaning out for next loop
+        codeVector.clear();
+        codeList.clear();
+        codeSet.clear();
     }
 
     return 0;
